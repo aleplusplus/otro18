@@ -1,0 +1,53 @@
+# projectId: "cj250ts0c1p9a0115rciisman"
+
+type Comment {
+  author: User @relation(name: "CommentsByUser")
+  content: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  post: Post @relation(name: "CommentsOnPost")
+  updatedAt: DateTime!
+}
+
+type File {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Location {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  latitude: Float!
+  longitude: Float!
+  updatedAt: DateTime!
+  user: User @relation(name: "UserLocation")
+}
+
+type Post {
+  author: User @relation(name: "PostsByUser")
+  comments: [Comment!]! @relation(name: "CommentsOnPost")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  published: Boolean!
+  slug: String!
+  text: String!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type User {
+  comments: [Comment!]! @relation(name: "CommentsByUser")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  location: Location @relation(name: "UserLocation")
+  name: String!
+  posts: [Post!]! @relation(name: "PostsByUser")
+  updateAt: DateTime!
+  updatedAt: DateTime!
+}
